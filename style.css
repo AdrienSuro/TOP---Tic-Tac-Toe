@@ -1,3 +1,7 @@
+:root {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .gameboard {
     display: grid;
     grid-template-rows: repeat(3, 100px);
@@ -9,4 +13,7 @@
     border: solid 3px black;
     justify-self: center;
     width: 100px;
+    font-size: 60px;
+    text-align: center;
+    padding: 10px 0;
 }
