@@ -23,13 +23,16 @@ let gameboardModule = (function () {
   const createGameboard = function () {
     let gameboardArray = [];
     gameboardArray.length = 9;
-    let addPlayerChoice = function () {
-      this.innerHTML = "X";
-    };
     for (let i = 0; i < gameboardArray.length; i++) {
       const boxContent = document.createElement("div");
       boxContent.id = "gameboardBox";
-      boxContent.addEventListener("click", addPlayerChoice);
+      boxContent.addEventListener("click", function() {
+        if (gameboardArray[i] === undefined) {
+            gameboardArray[i] = "X";
+            this.innerHTML = gameboardArray[i];
+            
+          };
+      });
       gameboardGrid.appendChild(boxContent);
     }
     console.log(gameboardArray);
