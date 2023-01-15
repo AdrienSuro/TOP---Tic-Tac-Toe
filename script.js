@@ -1,3 +1,6 @@
+// Retrieve from DOM :
+let gameboardGrid = document.getElementById("gameboardGrid");
+
 const playerFactory = (name, symbol) => {
   let score = 0;
   let addPoint = function () {
@@ -7,21 +10,27 @@ const playerFactory = (name, symbol) => {
   return { name, score, addPoint, winnerMessage };
 };
 
-let startNewGame = function() {
+let startNewGame = function () {
   let playerName = prompt("What's your name?");
-  let playerSymbol = prompt("Choose a symbol. Type the letter X or the letter O.");
+  let playerSymbol = prompt(
+    "Choose a symbol. Type the letter X or the letter O."
+  );
   let player = playerFactory(playerName, playerSymbol);
   console.log(player);
-}
-
-document.getElementById('startButton').addEventListener('click', startNewGame);
+};
 
 let gameboardModule = (function () {
   const createGameboard = function () {
     let gameboardArray = [];
     gameboardArray.length = 9;
+    let addPlayerChoice = function () {
+      this.innerHTML = "X";
+    };
     for (let i = 0; i < gameboardArray.length; i++) {
-      gameboardArray[i] = i;
+      const boxContent = document.createElement("div");
+      boxContent.id = "gameboardBox";
+      boxContent.addEventListener("click", addPlayerChoice);
+      gameboardGrid.appendChild(boxContent);
     }
     console.log(gameboardArray);
   };
@@ -38,5 +47,7 @@ let gameboardModule = (function () {
 })();
 
 // DOM Manipulation :
-const buttonGameboard = document.getElementById("buttonGameboard");
-buttonGameboard.addEventListener("click", gameboardModule.returnGameboard);
+document.getElementById("startButton").addEventListener("click", startNewGame);
+document
+  .getElementById("buttonGameboard")
+  .addEventListener("click", gameboardModule.returnGameboard);

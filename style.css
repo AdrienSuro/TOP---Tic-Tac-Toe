@@ -2,14 +2,14 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.gameboard {
+#gameboardGrid {
     display: grid;
     grid-template-rows: repeat(3, 100px);
     grid-template-columns: repeat(3, 100px);
     justify-content: center;
 }
 
-.gameboard > div {
+#gameboardBox {
     border: solid 3px black;
     justify-self: center;
     width: 100px;
