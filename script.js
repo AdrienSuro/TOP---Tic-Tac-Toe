@@ -23,25 +23,37 @@ let gameboardModule = (function () {
   const createGameboard = function () {
     let gameboardArray = [];
     gameboardArray.length = 9;
+    let lastPlayer = "";
     for (let i = 0; i < gameboardArray.length; i++) {
       const boxContent = document.createElement("div");
       boxContent.id = "gameboardBox";
-      boxContent.addEventListener("click", function() {
+      boxContent.addEventListener("click", function () {
         if (gameboardArray[i] === undefined) {
+          console.log(lastPlayer);
+            if (lastPlayer === "X") {
+            gameboardArray[i] = "O";
+            this.innerHTML = gameboardArray[i];
+            lastPlayer = "O";
+            if (((gameboardArray[0] && gameboardArray[3] && gameboardArray[6]) === ("X" || "O")) || ((gameboardArray[2] && gameboardArray[5] && gameboardArray[8]) === ("X" || "O")) || ((gameboardArray[3] && gameboardArray[6] && gameboardArray[9]) === ("X" || "O")) || ((gameboardArray[1] && gameboardArray[2] && gameboardArray[3]) === ("X" || "O"))) {
+                console.log("Somebody won");
+            }
+          } else if (lastPlayer === "" || "O") {
             gameboardArray[i] = "X";
             this.innerHTML = gameboardArray[i];
-            
-          };
-      });
+            lastPlayer = "X";
+            if (((gameboardArray[0] && gameboardArray[3] && gameboardArray[6]) === ("X" || "O")) || ((gameboardArray[2] && gameboardArray[5] && gameboardArray[8]) === ("X" || "O")) || ((gameboardArray[3] && gameboardArray[6] && gameboardArray[9]) === ("X" || "O")) || ((gameboardArray[1] && gameboardArray[2] && gameboardArray[3]) === ("X" || "O"))) {
+                console.log("Somebody won");
+            }
+          }
+      }
+    });
       gameboardGrid.appendChild(boxContent);
     }
-    console.log(gameboardArray);
   };
 
   function logGameboard() {
     createGameboard();
   }
-
   return {
     returnGameboard: function () {
       logGameboard();
