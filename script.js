@@ -19,8 +19,12 @@ let startNewGame = function () {
   console.log(player);
 };
 
+let checkIfGrid = 0;
+
 let gameboardModule = (function () {
   const createGameboard = function () {
+    if (checkIfGrid === 0) {
+    checkIfGrid += 1;
     let gameboardArray = [];
     gameboardArray.length = 9;
     let lastPlayer = "";
@@ -34,14 +38,14 @@ let gameboardModule = (function () {
             gameboardArray[i] = "O";
             this.innerHTML = gameboardArray[i];
             lastPlayer = "O";
-            if (((gameboardArray[0] && gameboardArray[3] && gameboardArray[6]) === ("X" || "O")) || ((gameboardArray[2] && gameboardArray[5] && gameboardArray[8]) === ("X" || "O")) || ((gameboardArray[3] && gameboardArray[6] && gameboardArray[9]) === ("X" || "O")) || ((gameboardArray[1] && gameboardArray[2] && gameboardArray[3]) === ("X" || "O"))) {
+            if (((gameboardArray[0] && gameboardArray[3] && gameboardArray[6]) === ("X" || "O")) || ((gameboardArray[1] && gameboardArray[4] && gameboardArray[7]) === ("X" || "O")) || ((gameboardArray[2] && gameboardArray[5] && gameboardArray[8]) === ("X" || "O")) || ((gameboardArray[0] && gameboardArray[1] && gameboardArray[2]) === ("X" || "O")) || ((gameboardArray[3] && gameboardArray[4] && gameboardArray[5]) === ("X" || "O")) || ((gameboardArray[6] && gameboardArray[7] && gameboardArray[8]) === ("X" || "O")) || ((gameboardArray[0] && gameboardArray[4] && gameboardArray[8]) === ("X" || "O")) || ((gameboardArray[2] && gameboardArray[4] && gameboardArray[6]) === ("X" || "O"))) {
                 console.log("Somebody won");
             }
           } else if (lastPlayer === "" || "O") {
             gameboardArray[i] = "X";
             this.innerHTML = gameboardArray[i];
             lastPlayer = "X";
-            if (((gameboardArray[0] && gameboardArray[3] && gameboardArray[6]) === ("X" || "O")) || ((gameboardArray[2] && gameboardArray[5] && gameboardArray[8]) === ("X" || "O")) || ((gameboardArray[3] && gameboardArray[6] && gameboardArray[9]) === ("X" || "O")) || ((gameboardArray[1] && gameboardArray[2] && gameboardArray[3]) === ("X" || "O"))) {
+            if (((gameboardArray[0] && gameboardArray[3] && gameboardArray[6]) === ("X" || "O")) || ((gameboardArray[1] && gameboardArray[4] && gameboardArray[7]) === ("X" || "O")) || ((gameboardArray[2] && gameboardArray[5] && gameboardArray[8]) === ("X" || "O")) || ((gameboardArray[0] && gameboardArray[1] && gameboardArray[2]) === ("X" || "O")) || ((gameboardArray[3] && gameboardArray[4] && gameboardArray[5]) === ("X" || "O")) || ((gameboardArray[6] && gameboardArray[7] && gameboardArray[8]) === ("X" || "O")) || ((gameboardArray[0] && gameboardArray[4] && gameboardArray[8]) === ("X" || "O")) || ((gameboardArray[2] && gameboardArray[4] && gameboardArray[6]) === ("X" || "O"))) {
                 console.log("Somebody won");
             }
           }
@@ -49,7 +53,10 @@ let gameboardModule = (function () {
     });
       gameboardGrid.appendChild(boxContent);
     }
+  } else {
+    console.log("I can't put anything more on this page, the grid is already here");
   };
+}
 
   function logGameboard() {
     createGameboard();
