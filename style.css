@@ -1,5 +1,6 @@
 :root {
     font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
 }
 
 #main {
@@ -25,7 +26,7 @@ h1 {
     justify-content: center;
 }
 
-#startButton {
+#choosePlayers {
     grid-row: 3/4;
     grid-column: 2/3;
 }
@@ -39,12 +40,17 @@ h1 {
     grid-row: 2/3;
     grid-column: 1/2;
     justify-self: center;
-    align-self: center; 
+    align-self: center;
+    text-align: center;
 }
 
 #playerO {
     grid-row: 2/3;
     grid-column: 4/5;
+}
+
+h2 {
+    font-size: 98px;
 }
 
 #gameboardBox {
