@@ -21,16 +21,17 @@ let startNewGame = function () {
   console.log(player);
   }
 
-const createGrid = (() => {  
-  function create() { 
+const createGrid = () => {  
+  if (gameboardGrid.hasChildNodes()) {
+    console.log("Grid already here")
+  } else {
     for (let i = 0; i < gameboardArray.length; i++) {
-        const boxContent = document.createElement("div");
-        boxContent.id = "gameboardBox";
-        boxContent.addEventListener("click", gameLogic.setPlayerMark(i, boxContent));
-        gameboardGrid.appendChild(boxContent);};
-  }
-  return {create, gameboardArray};
-})();
+      const boxContent = document.createElement("div");
+      boxContent.id = "gameboardBox";
+      boxContent.addEventListener("click", () => { gameLogic.setPlayerMark(i, boxContent) });
+      gameboardGrid.appendChild(boxContent);};
+  };
+}
 
 const gameLogic = (() => {
     let lastPlayer = "";
@@ -55,7 +56,7 @@ const gameLogic = (() => {
         lastPlayer = "X";
         checkWinner();
         }
-    }
+    };
     return {setPlayerMark};
 })();
 
@@ -63,4 +64,4 @@ const gameLogic = (() => {
 document.getElementById("startButton").addEventListener("click", startNewGame);
 document
   .getElementById("buttonGameboard")
-  .addEventListener("click", gameLogic.setPlayerMark)
+  .addEventListener("click", createGrid)
