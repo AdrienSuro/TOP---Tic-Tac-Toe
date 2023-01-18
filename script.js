@@ -46,17 +46,21 @@ const gameLogic = (() => {
 
     const setPlayerMark = function(i, box) {
       if (lastPlayer === "X") {
-        gameboardArray[i] = "O";
-        box.innerHTML = gameboardArray[i];
-        lastPlayer = "O";
-        checkWinner();
+        if (!box.innerHTML) {
+          gameboardArray[i] = "O";
+          box.innerHTML = gameboardArray[i];
+          lastPlayer = "O";
+          checkWinner();
+        }
       } else if (lastPlayer === "" || "O") {
+        if (!box.innerHTML) {
         gameboardArray[i] = "X";
         box.innerHTML = gameboardArray[i];
         lastPlayer = "X";
         checkWinner();
         }
-    };
+      };
+  }
     return {setPlayerMark};
 })();
 
