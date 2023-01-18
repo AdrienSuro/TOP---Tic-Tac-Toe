@@ -2,6 +2,7 @@
 let gameboardGrid = document.getElementById("gameboardGrid");
 let gameboardArray = [];
 gameboardArray.length = 9; 
+let gameStatus = "running";
 
 const playerFactory = (name, symbol) => {
   let score = 0;
@@ -40,20 +41,23 @@ const gameLogic = (() => {
         let winningConditionO = (gameboardArray[0] === ("O") && gameboardArray[3] === ("O") && gameboardArray[6] === ("O"))|| (gameboardArray[1] === ("O") && gameboardArray[4] === ("O") && gameboardArray[7] === ("O")) || (gameboardArray[2] === ("O") && gameboardArray[5] === ("O") && gameboardArray[8] === ("O")) || (gameboardArray[0] === ("O") && gameboardArray[1] === ("O") && gameboardArray[2] === ("O")) || (gameboardArray[3] === ("O") && gameboardArray[4] === ("O") && gameboardArray[5] === ("O")) || (gameboardArray[6] === ("O") && gameboardArray[7] === ("O") && gameboardArray[8] === ("O")) || (gameboardArray[0] === ("O") && gameboardArray[4] === ("O") && gameboardArray[8] === ("O")) || (gameboardArray[2] === ("O") && gameboardArray[4] === ("O") && gameboardArray[6] === ("O"));
         if (winningConditionX) {
           console.log("X won");
+          gameStatus = "ended"; 
         }  else if (winningConditionO) {
-          console.log("O won"); }
+          console.log("O won");
+          gameStatus = "ended";
+        }
     }
 
     const setPlayerMark = function(i, box) {
       if (lastPlayer === "X") {
-        if (!box.innerHTML) {
+          if ((!box.innerHTML) && (gameStatus === "running")) {
           gameboardArray[i] = "O";
           box.innerHTML = gameboardArray[i];
           lastPlayer = "O";
           checkWinner();
         }
       } else if (lastPlayer === "" || "O") {
-        if (!box.innerHTML) {
+        if ((!box.innerHTML) && (gameStatus === "running")) {
         gameboardArray[i] = "X";
         box.innerHTML = gameboardArray[i];
         lastPlayer = "X";
