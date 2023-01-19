@@ -1,4 +1,3 @@
-// Retrieve from DOM :
 let gameboardGrid = document.getElementById("gameboardGrid");
 let gameboardArray = [];
 gameboardArray.length = 9; 
@@ -9,18 +8,9 @@ const playerFactory = (name) => {
   let addPoint = function () {
     score += 1;
   };
-  let winnerMessage = `${name} has won the game!`;
+  let winnerMessage = () => console.log(`${name} has won the game!`);
   return { name, score, addPoint, winnerMessage };
 };
-
-let choosePlayers = function (symbol) {
-  let choosePlayerX = prompt(`Who will play with the ${symbol} ?`);
-  let choosePlayerO = prompt("Who will play with the O ?");
-  let player = playerFactory(prompt(`Who will play with the ${symbol} ?`));
-  let playerO = playerFactory(choosePlayerO);
-  console.log(playerX);
-  console.log(playerO);
-  }
 
 const createGrid = () => {  
   if (gameboardGrid.hasChildNodes()) {
@@ -34,20 +24,23 @@ const createGrid = () => {
   };
 }
 
+// REPAIR WINNER MESSAGE FUNCTIONALITY
 const gameLogic = (() => {
     let lastPlayer = "";
     const checkWinner = function() {
         let winningConditionX = (gameboardArray[0] === ("X") && gameboardArray[3] === ("X") && gameboardArray[6] === ("X"))|| (gameboardArray[1] === ("X") && gameboardArray[4] === ("X") && gameboardArray[7] === ("X")) || (gameboardArray[2] === ("X") && gameboardArray[5] === ("X") && gameboardArray[8] === ("X")) || (gameboardArray[0] === ("X") && gameboardArray[1] === ("X") && gameboardArray[2] === ("X")) || (gameboardArray[3] === ("X") && gameboardArray[4] === ("X") && gameboardArray[5] === ("X")) || (gameboardArray[6] === ("X") && gameboardArray[7] === ("X") && gameboardArray[8] === ("X")) || (gameboardArray[0] === ("X") && gameboardArray[4] === ("X") && gameboardArray[8] === ("X")) || (gameboardArray[2] === ("X") && gameboardArray[4] === ("X") && gameboardArray[6] === ("X"));
         let winningConditionO = (gameboardArray[0] === ("O") && gameboardArray[3] === ("O") && gameboardArray[6] === ("O"))|| (gameboardArray[1] === ("O") && gameboardArray[4] === ("O") && gameboardArray[7] === ("O")) || (gameboardArray[2] === ("O") && gameboardArray[5] === ("O") && gameboardArray[8] === ("O")) || (gameboardArray[0] === ("O") && gameboardArray[1] === ("O") && gameboardArray[2] === ("O")) || (gameboardArray[3] === ("O") && gameboardArray[4] === ("O") && gameboardArray[5] === ("O")) || (gameboardArray[6] === ("O") && gameboardArray[7] === ("O") && gameboardArray[8] === ("O")) || (gameboardArray[0] === ("O") && gameboardArray[4] === ("O") && gameboardArray[8] === ("O")) || (gameboardArray[2] === ("O") && gameboardArray[4] === ("O") && gameboardArray[6] === ("O"));
         if (winningConditionX) {
-          console.log("X won");
+          playerX.winnerMessage;
           gameStatus = "ended"; 
         }  else if (winningConditionO) {
-          console.log("O won");
+          playerO.winnerMessage.bind(playerO);
           gameStatus = "ended";
         }
     }
-
+    
+    // Create a reset button
+    // Create a minimax to play against computer
     const setPlayerMark = function(i, box) {
       if (lastPlayer === "X") {
           if ((!box.innerHTML) && (gameStatus === "running")) {
@@ -68,7 +61,6 @@ const gameLogic = (() => {
     return {setPlayerMark};
 })();
 
-// DOM Manipulation :
 document
   .getElementById("buttonGameboard")
   .addEventListener("click", createGrid)
