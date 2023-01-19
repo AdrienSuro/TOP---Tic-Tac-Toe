@@ -4,8 +4,14 @@ let gameboardArray = [];
 gameboardArray.length = 9; 
 let gameStatus = "running";
 
-const playerFactory = (symbol, name) => {
-  let choosePlayers = function()
+document.getElementById("choosePlayers").addEventListener("click", () => { 
+  () => { 
+    playerFactory(prompt("Who will play the X symbol ?")); 
+    playerFactory(prompt("Who will play the O symbol ?"));
+  } 
+});
+
+const playerFactory = (name) => {
   let score = 0;
   let addPoint = function () {
     score += 1;
@@ -70,7 +76,6 @@ const gameLogic = (() => {
 })();
 
 // DOM Manipulation :
-document.getElementById("choosePlayers").addEventListener("click", choosePlayers);
 document
   .getElementById("buttonGameboard")
   .addEventListener("click", createGrid)
