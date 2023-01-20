@@ -2,7 +2,10 @@ let gameboardGrid = document.getElementById("gameboardGrid");
 let gameboardArray = [];
 gameboardArray.length = 9; 
 let gameStatus = "running";
+let playerX = {};
+let playerO = {};
 
+// Change winnerMessage so that it displays message on user's screen.
 const playerFactory = (name) => {
   let score = 0;
   let addPoint = function () {
@@ -24,17 +27,16 @@ const createGrid = () => {
   };
 }
 
-// REPAIR WINNER MESSAGE FUNCTIONALITY
 const gameLogic = (() => {
     let lastPlayer = "";
     const checkWinner = function() {
         let winningConditionX = (gameboardArray[0] === ("X") && gameboardArray[3] === ("X") && gameboardArray[6] === ("X"))|| (gameboardArray[1] === ("X") && gameboardArray[4] === ("X") && gameboardArray[7] === ("X")) || (gameboardArray[2] === ("X") && gameboardArray[5] === ("X") && gameboardArray[8] === ("X")) || (gameboardArray[0] === ("X") && gameboardArray[1] === ("X") && gameboardArray[2] === ("X")) || (gameboardArray[3] === ("X") && gameboardArray[4] === ("X") && gameboardArray[5] === ("X")) || (gameboardArray[6] === ("X") && gameboardArray[7] === ("X") && gameboardArray[8] === ("X")) || (gameboardArray[0] === ("X") && gameboardArray[4] === ("X") && gameboardArray[8] === ("X")) || (gameboardArray[2] === ("X") && gameboardArray[4] === ("X") && gameboardArray[6] === ("X"));
         let winningConditionO = (gameboardArray[0] === ("O") && gameboardArray[3] === ("O") && gameboardArray[6] === ("O"))|| (gameboardArray[1] === ("O") && gameboardArray[4] === ("O") && gameboardArray[7] === ("O")) || (gameboardArray[2] === ("O") && gameboardArray[5] === ("O") && gameboardArray[8] === ("O")) || (gameboardArray[0] === ("O") && gameboardArray[1] === ("O") && gameboardArray[2] === ("O")) || (gameboardArray[3] === ("O") && gameboardArray[4] === ("O") && gameboardArray[5] === ("O")) || (gameboardArray[6] === ("O") && gameboardArray[7] === ("O") && gameboardArray[8] === ("O")) || (gameboardArray[0] === ("O") && gameboardArray[4] === ("O") && gameboardArray[8] === ("O")) || (gameboardArray[2] === ("O") && gameboardArray[4] === ("O") && gameboardArray[6] === ("O"));
         if (winningConditionX) {
-          playerX.winnerMessage;
+          playerX.winnerMessage()
           gameStatus = "ended"; 
         }  else if (winningConditionO) {
-          playerO.winnerMessage.bind(playerO);
+          playerO.winnerMessage()
           gameStatus = "ended";
         }
     }
@@ -70,8 +72,13 @@ document
   .addEventListener("click", inputPlayerName)
 
 function inputPlayerName() {
-  let playerX = playerFactory(prompt("Player X name"));
-  let playerO = playerFactory(prompt("Player O name"));
+  playerX = playerFactory(prompt("Player X name"));
+  playerO = playerFactory(prompt("Player O name"));
+  console.log(playerX);
   document.getElementById("nameX").innerHTML = playerX.name;
-  document.getElementById("nameO").innerHTML = playerO.name; 
+  document.getElementById("nameO").innerHTML = playerO.name;
+  return {
+    playerX, 
+    playerO
+  } 
 }
