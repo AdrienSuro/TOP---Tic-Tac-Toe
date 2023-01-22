@@ -18,7 +18,10 @@ document
   .addEventListener("click", resetGrid);
 
 function createGrid() {
-  if (gameboardGrid.hasChildNodes()) {
+  if (document.getElementById("nameX").innerHTML == '') {
+    alert("Choose player names first")
+  }
+  else if (gameboardGrid.hasChildNodes()) {
     console.log("Grid already here");
   } else {
     for (let i = 0; i < gameboardArray.length; i++) {
