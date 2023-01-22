@@ -2,7 +2,10 @@ let gameboardGrid = document.getElementById("gameboardGrid");
 let gameboardArray = [];
 gameboardArray.length = 9; 
 let gameStatus = "running";
+let playerX = {};
+let playerO = {};
 
+// Change winnerMessage so that it displays message on user's screen.
 const playerFactory = (name) => {
   let score = 0;
   let addPoint = function () {
@@ -24,7 +27,6 @@ const createGrid = () => {
   };
 }
 
-// REPAIR WINNER MESSAGE FUNCTIONALITY
 const gameLogic = (() => {
     let lastPlayer = "";
     const checkWinner = function() {
@@ -35,7 +37,7 @@ const gameLogic = (() => {
           gameStatus = "ended";
           document.getElementById("winnerScreen").classList.toggle("show"); 
         }  else if (winningConditionO) {
-          playerO.winnerMessage.bind(playerO);
+          playerO.winnerMessage()
           gameStatus = "ended";
         }
     }
@@ -71,8 +73,13 @@ document
   .addEventListener("click", inputPlayerName)
 
 function inputPlayerName() {
-  let playerX = playerFactory(prompt("Player X name"));
-  let playerO = playerFactory(prompt("Player O name"));
+  playerX = playerFactory(prompt("Player X name"));
+  playerO = playerFactory(prompt("Player O name"));
+  console.log(playerX);
   document.getElementById("nameX").innerHTML = playerX.name;
-  document.getElementById("nameO").innerHTML = playerO.name; 
+  document.getElementById("nameO").innerHTML = playerO.name;
+  return {
+    playerX, 
+    playerO
+  } 
 }

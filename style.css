@@ -44,7 +44,7 @@ h1 {
     margin-bottom: 20px;
 }
 
-#playerX {
+#divX {
     grid-row: 2/3;
     grid-column: 1/2;
     justify-self: center;
@@ -52,7 +52,7 @@ h1 {
     text-align: center;
 }
 
-#playerO {
+#divO {
     grid-row: 2/3;
     grid-column: 4/5;
     justify-self: center;
