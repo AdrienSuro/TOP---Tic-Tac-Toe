@@ -32,7 +32,8 @@ const gameLogic = (() => {
         let winningConditionO = (gameboardArray[0] === ("O") && gameboardArray[3] === ("O") && gameboardArray[6] === ("O"))|| (gameboardArray[1] === ("O") && gameboardArray[4] === ("O") && gameboardArray[7] === ("O")) || (gameboardArray[2] === ("O") && gameboardArray[5] === ("O") && gameboardArray[8] === ("O")) || (gameboardArray[0] === ("O") && gameboardArray[1] === ("O") && gameboardArray[2] === ("O")) || (gameboardArray[3] === ("O") && gameboardArray[4] === ("O") && gameboardArray[5] === ("O")) || (gameboardArray[6] === ("O") && gameboardArray[7] === ("O") && gameboardArray[8] === ("O")) || (gameboardArray[0] === ("O") && gameboardArray[4] === ("O") && gameboardArray[8] === ("O")) || (gameboardArray[2] === ("O") && gameboardArray[4] === ("O") && gameboardArray[6] === ("O"));
         if (winningConditionX) {
           playerX.winnerMessage;
-          gameStatus = "ended"; 
+          gameStatus = "ended";
+          document.getElementById("winnerScreen").classList.toggle("show"); 
         }  else if (winningConditionO) {
           playerO.winnerMessage.bind(playerO);
           gameStatus = "ended";
