@@ -1,23 +1,11 @@
-let gameboardGrid = document.getElementById("gameboardGrid");
-let gameboardArray = [];
-gameboardArray.length = 9;
-let gameStatus = "running";
-let playerX = {};
-let playerO = {};
+// NEXT STEP : repair play against computer logic
 
-document
-  .getElementById("buttonGameboard")
-  .addEventListener("click", createGrid);
-
-document
-  .getElementById("choosePlayers")
-  .addEventListener("click", inputPlayerName);
-
-document
-  .getElementById("gameReset")
-  .addEventListener("click", resetGrid);
-
-function createGrid() {
+function createUserGrid() {
+  opponent = "user"
+  playerX = playerFactory(prompt("Player X name"));
+  playerO = playerFactory(prompt("Player O name"));
+  document.getElementById("nameX").innerHTML = playerX.name;
+  document.getElementById("nameO").innerHTML = playerO.name;
   if (document.getElementById("nameX").innerHTML == '') {
     alert("Choose player names first")
   }
@@ -28,33 +16,35 @@ function createGrid() {
       const boxContent = document.createElement("div");
       boxContent.id = "gameboardBox";
       boxContent.addEventListener("click", () => {
-        gameLogic.setPlayerMark(i, boxContent);
+        gameLogic.playAgainstUser(i, boxContent);
       });
       gameboardGrid.appendChild(boxContent);
     }
   }
 };
 
-function inputPlayerName() {
-  playerX = playerFactory(prompt("Player X name"));
-  playerO = playerFactory(prompt("Player O name"));
-  console.log(playerX);
-  document.getElementById("nameX").innerHTML = playerX.name;
-  document.getElementById("nameO").innerHTML = playerO.name;
-  return {
-    playerX,
-    playerO,
-  };
-}
+function createComputerGrid() {
+  opponent = "computer"
+  document.getElementById("nameX").innerHTML = "You";
+  document.getElementById("nameO").innerHTML = "Computer";
+  if (gameboardGrid.hasChildNodes()) {
+    console.log("Grid already here");
+  } else {
+    for (let i = 0; i < gameboardArray.length; i++) {
+      const boxContent = document.createElement("div");
+      boxContent.id = "gameboardBox";
+      boxContent.addEventListener("click", () => {
+        gameLogic.playAgainstUser(i, boxContent);
+      });
+      gameboardGrid.appendChild(boxContent);
+    }
+  }
+};
 
-// Change winnerMessage so that it displays message on user's screen.
+
 const playerFactory = (name) => {
-  let score = 0;
-  let addPoint = function () {
-    score += 1;
-  };
   let winnerMessage = `${name} has won the game!`;
-  return { name, score, addPoint, winnerMessage };
+  return { name, winnerMessage };
 };
 
 const gameLogic = (() => {
@@ -121,31 +111,88 @@ const gameLogic = (() => {
     }
   };
 
-  // Create a reset button
-  // Create a minimax to play against computer
-  const setPlayerMark = function (i, box) {
-    if (lastPlayer === "X") {
-      if (!box.innerHTML && gameStatus === "running") {
-        gameboardArray[i] = "O";
-        box.innerHTML = gameboardArray[i];
-        lastPlayer = "O";
-        checkWinner();
-      }
-    } else if (lastPlayer === "" || "O") {
-      if (!box.innerHTML && gameStatus === "running") {
-        gameboardArray[i] = "X";
-        box.innerHTML = gameboardArray[i];
-        lastPlayer = "X";
-        checkWinner();
-      }
-    }
+  const playAgainstUser = function (i, box) {
+        if (opponent === "user") {
+          if (lastPlayer === "X") {
+            if (!box.innerHTML && gameStatus === "running") {
+              gameboardArray[i] = "O";
+              box.innerHTML = gameboardArray[i];
+              lastPlayer = "O";
+              checkWinner();
+            }
+          } else if (lastPlayer === "" || "O") {
+            if (!box.innerHTML && gameStatus === "running") {
+              gameboardArray[i] = "X";
+              box.innerHTML = gameboardArray[i];
+              lastPlayer = "X";
+              checkWinner();
+            }
+          }
+        }
+        else if (opponent === "computer") {
+          console.log("We're inside playAgainstUser")
+          if (!box.innerHTML && gameStatus === "running") {
+            console.log("We're inside if");
+            gameboardArray[i] = "X";
+            box.innerHTML = gameboardArray[i];
+            checkWinner();
+            console.log("We're inside if")
+            let checkAgain = "yes"
+            console.log(i)
+            while (checkAgain == "yes") {
+              let randomChoice = Math.floor(Math.random()*9)
+              if (gameboardArray[randomChoice]) {
+                console.log(randomChoice[randomChoice])
+                checkAgain = "yes";
+              }
+              else {
+                console.log("We're inside randomChoice")
+                gameboardArray[randomChoice] = "O"
+                checkAgain = "no"
+                checkWinner();
+              }
+            }
+          }
+        }
   };
-  return { setPlayerMark };
+
+  function inputPlayerName() {
+    playerX = playerFactory(prompt("Player X name"));
+    playerO = playerFactory(prompt("Player O name"));
+    document.getElementById("nameX").innerHTML = playerX.name;
+    document.getElementById("nameO").innerHTML = playerO.name;
+    return {
+      playerX,
+      playerO,
+    };
+  };
+
+  return { playAgainstUser, inputPlayerName };
 })();
 
 function resetGrid() {
     document.getElementById("winnerScreen").classList.toggle("show");
     gameboardGrid.innerHTML = '';
     gameStatus = 'running';
-    createGrid();
+    createUserGrid();
 }
+
+let gameboardGrid = document.getElementById("gameboardGrid");
+let gameboardArray = [];
+gameboardArray.length = 9;
+let gameStatus = "running";
+let playerX = {};
+let playerO = {};
+let opponent = "";
+
+document
+  .getElementById("againstUserButton")
+  .addEventListener("click", createUserGrid);
+
+document
+  .getElementById("gameReset")
+  .addEventListener("click", resetGrid);
+
+document
+  .getElementById("againstComputerButton")
+  .addEventListener("click", createComputerGrid);
