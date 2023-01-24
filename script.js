@@ -134,18 +134,20 @@ const gameLogic = (() => {
         box.innerHTML = gameboardArray[i];
         checkWinner();
         let checkAgain = "yes";
-        while (checkAgain == "yes" && gameStatus === "running") {
-          let randomChoice = Math.floor(Math.random() * 9);
-          if (gameboardArray[randomChoice]) {
-            checkAgain = "yes";
-          } else {
-            gameboardArray[randomChoice] = "O";
-            document.getElementById(`gameboardBox${randomChoice}`).innerHTML =
-              gameboardArray[randomChoice];
-            checkAgain = "no";
-            checkWinner();
+        setTimeout(() => {
+          while (checkAgain == "yes" && gameStatus === "running") {
+            let randomChoice = Math.floor(Math.random() * 9);
+            if (gameboardArray[randomChoice]) {
+              checkAgain = "yes";
+            } else {
+              gameboardArray[randomChoice] = "O";
+              document.getElementById(`gameboardBox${randomChoice}`).innerHTML =
+                gameboardArray[randomChoice];
+              checkAgain = "no";
+              checkWinner();
+            }
           }
-        }
+        }, 250)
       }
     }
   };
