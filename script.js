@@ -1,16 +1,15 @@
-// NEXT STEP : repair play against computer logic
+// NEXT STEP : repair reset function when playing against computer
 
 function createUserGrid() {
-  opponent = "user"
+  opponent = "user";
   playerX = playerFactory(prompt("Player X name"));
   playerO = playerFactory(prompt("Player O name"));
   document.getElementById("nameX").innerHTML = playerX.name;
   document.getElementById("nameO").innerHTML = playerO.name;
-  if (document.getElementById("nameX").innerHTML == '') {
-    alert("Choose player names first")
-  }
-  else if (gameboardGrid.hasChildNodes()) {
-    console.log("Grid already here");
+  if (document.getElementById("nameX").innerHTML == "") {
+    alert("Choose player names first");
+  } else if (gameboardGrid.hasChildNodes()) {
+    alert("Grid already here");
   } else {
     for (let i = 0; i < gameboardArray.length; i++) {
       const boxContent = document.createElement("div");
@@ -21,26 +20,27 @@ function createUserGrid() {
       gameboardGrid.appendChild(boxContent);
     }
   }
-};
+}
 
 function createComputerGrid() {
-  opponent = "computer"
-  document.getElementById("nameX").innerHTML = "You";
-  document.getElementById("nameO").innerHTML = "Computer";
+  opponent = "computer";
+  playerX = playerFactory("User");
+  playerO = playerFactory("Computer");
+  document.getElementById("nameX").innerHTML = playerX.name;
+  document.getElementById("nameO").innerHTML = playerO.name;
   if (gameboardGrid.hasChildNodes()) {
-    console.log("Grid already here");
+    alert("Grid already here");
   } else {
     for (let i = 0; i < gameboardArray.length; i++) {
       const boxContent = document.createElement("div");
-      boxContent.id = "gameboardBox";
+      boxContent.id = `gameboardBox${i}`;
       boxContent.addEventListener("click", () => {
         gameLogic.playAgainstUser(i, boxContent);
       });
       gameboardGrid.appendChild(boxContent);
     }
   }
-};
-
+}
 
 const playerFactory = (name) => {
   let winnerMessage = `${name} has won the game!`;
@@ -101,59 +101,55 @@ const gameLogic = (() => {
         gameboardArray[4] === "O" &&
         gameboardArray[6] === "O");
     if (winningConditionX) {
-      document.getElementById("winnerMessage").innerHTML = playerX.winnerMessage;
+      document.getElementById("winnerMessage").innerHTML =
+        playerX.winnerMessage;
       gameStatus = "ended";
       document.getElementById("winnerScreen").classList.toggle("show");
     } else if (winningConditionO) {
-        document.getElementById("winnerMessage").innerHTML = playerO.winnerMessage;
-        gameStatus = "ended";
-        document.getElementById("winnerScreen").classList.toggle("show");
+      document.getElementById("winnerMessage").innerHTML =
+        playerO.winnerMessage;
+      gameStatus = "ended";
+      document.getElementById("winnerScreen").classList.toggle("show");
     }
   };
 
   const playAgainstUser = function (i, box) {
-        if (opponent === "user") {
-          if (lastPlayer === "X") {
-            if (!box.innerHTML && gameStatus === "running") {
-              gameboardArray[i] = "O";
-              box.innerHTML = gameboardArray[i];
-              lastPlayer = "O";
-              checkWinner();
-            }
-          } else if (lastPlayer === "" || "O") {
-            if (!box.innerHTML && gameStatus === "running") {
-              gameboardArray[i] = "X";
-              box.innerHTML = gameboardArray[i];
-              lastPlayer = "X";
-              checkWinner();
-            }
-          }
+    if (opponent === "user") {
+      if (lastPlayer === "X") {
+        if (!box.innerHTML && gameStatus === "running") {
+          gameboardArray[i] = "O";
+          box.innerHTML = gameboardArray[i];
+          lastPlayer = "O";
+          checkWinner();
         }
-        else if (opponent === "computer") {
-          console.log("We're inside playAgainstUser")
-          if (!box.innerHTML && gameStatus === "running") {
-            console.log("We're inside if");
-            gameboardArray[i] = "X";
-            box.innerHTML = gameboardArray[i];
+      } else if (lastPlayer === "" || "O") {
+        if (!box.innerHTML && gameStatus === "running") {
+          gameboardArray[i] = "X";
+          box.innerHTML = gameboardArray[i];
+          lastPlayer = "X";
+          checkWinner();
+        }
+      }
+    } else if (opponent === "computer") {
+      if (!box.innerHTML && gameStatus === "running") {
+        gameboardArray[i] = "X";
+        box.innerHTML = gameboardArray[i];
+        checkWinner();
+        let checkAgain = "yes";
+        while (checkAgain == "yes" && gameStatus === "running") {
+          let randomChoice = Math.floor(Math.random() * 9);
+          if (gameboardArray[randomChoice]) {
+            checkAgain = "yes";
+          } else {
+            gameboardArray[randomChoice] = "O";
+            document.getElementById(`gameboardBox${randomChoice}`).innerHTML =
+              gameboardArray[randomChoice];
+            checkAgain = "no";
             checkWinner();
-            console.log("We're inside if")
-            let checkAgain = "yes"
-            console.log(i)
-            while (checkAgain == "yes") {
-              let randomChoice = Math.floor(Math.random()*9)
-              if (gameboardArray[randomChoice]) {
-                console.log(randomChoice[randomChoice])
-                checkAgain = "yes";
-              }
-              else {
-                console.log("We're inside randomChoice")
-                gameboardArray[randomChoice] = "O"
-                checkAgain = "no"
-                checkWinner();
-              }
-            }
           }
         }
+      }
+    }
   };
 
   function inputPlayerName() {
@@ -165,16 +161,16 @@ const gameLogic = (() => {
       playerX,
       playerO,
     };
-  };
+  }
 
   return { playAgainstUser, inputPlayerName };
 })();
 
 function resetGrid() {
-    document.getElementById("winnerScreen").classList.toggle("show");
-    gameboardGrid.innerHTML = '';
-    gameStatus = 'running';
-    createUserGrid();
+  document.getElementById("winnerScreen").classList.toggle("show");
+  gameboardGrid.innerHTML = "";
+  gameStatus = "running";
+  createUserGrid();
 }
 
 let gameboardGrid = document.getElementById("gameboardGrid");

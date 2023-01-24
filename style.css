@@ -68,7 +68,7 @@ h2 {
     font-size: 98px;
 }
 
-#gameboardBox {
+*[id^=gameboardBox] {
     border: solid 3px black;
     justify-self: center;
     width: 100px;
