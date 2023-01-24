@@ -1,5 +1,3 @@
-// NEXT STEP : repair reset function when playing against computer
-
 function createUserGrid() {
   opponent = "user";
   playerX = playerFactory(prompt("Player X name"));
@@ -170,7 +168,8 @@ function resetGrid() {
   document.getElementById("winnerScreen").classList.toggle("show");
   gameboardGrid.innerHTML = "";
   gameStatus = "running";
-  createUserGrid();
+  gameboardArray = {};
+  gameboardArray.length = 9;
 }
 
 let gameboardGrid = document.getElementById("gameboardGrid");
@@ -185,9 +184,7 @@ document
   .getElementById("againstUserButton")
   .addEventListener("click", createUserGrid);
 
-document
-  .getElementById("gameReset")
-  .addEventListener("click", resetGrid);
+document.getElementById("gameReset").addEventListener("click", resetGrid);
 
 document
   .getElementById("againstComputerButton")
