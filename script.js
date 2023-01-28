@@ -20,6 +20,10 @@ function createUserGrid() {
   }
 }
 
+function checkDraw(i) {
+  return i === "O";
+}
+
 function createComputerGrid() {
   opponent = "computer";
   playerX = playerFactory("User");
@@ -98,7 +102,7 @@ const gameLogic = (() => {
       (gameboardArray[2] === "O" &&
         gameboardArray[4] === "O" &&
         gameboardArray[6] === "O");
-    if (winningConditionX) {
+      if (winningConditionX) {
       document.getElementById("winnerMessage").innerHTML =
         playerX.winnerMessage;
       gameStatus = "ended";
@@ -108,8 +112,13 @@ const gameLogic = (() => {
         playerO.winnerMessage;
       gameStatus = "ended";
       document.getElementById("winnerScreen").classList.toggle("show");
-    }
-  };
+    } else if (gameboardArray.every(i => i == "X" || "O")) {
+      document.getElementById("winnerMessage").innerHTML =
+        "It's a draw, how boring !";
+      gameStatus = "ended";
+      document.getElementById("winnerScreen").classList.toggle("show");
+  }
+}
 
   const playAgainstUser = function (i, box) {
     if (opponent === "user") {
@@ -170,7 +179,7 @@ function resetGrid() {
   document.getElementById("winnerScreen").classList.toggle("show");
   gameboardGrid.innerHTML = "";
   gameStatus = "running";
-  gameboardArray = {};
+  gameboardArray = [];
   gameboardArray.length = 9;
 }
 
