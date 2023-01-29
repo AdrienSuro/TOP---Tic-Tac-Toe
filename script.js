@@ -20,10 +20,6 @@ function createUserGrid() {
   }
 }
 
-function checkDraw(i) {
-  return i === "O";
-}
-
 function createComputerGrid() {
   opponent = "computer";
   playerX = playerFactory("User");
