@@ -108,7 +108,8 @@ const gameLogic = (() => {
         playerO.winnerMessage;
       gameStatus = "ended";
       document.getElementById("winnerScreen").classList.toggle("show");
-    } else if (gameboardArray.every(i => i == "X" || "O")) {
+    } else if (gameboardArray.every(i => i == "X" || i == "O")) {
+      console.log(gameboardArray);
       document.getElementById("winnerMessage").innerHTML =
         "It's a draw, how boring !";
       gameStatus = "ended";
@@ -180,8 +181,7 @@ function resetGrid() {
 }
 
 let gameboardGrid = document.getElementById("gameboardGrid");
-let gameboardArray = [];
-gameboardArray.length = 9;
+let gameboardArray = Array(9).fill(null);
 let gameStatus = "running";
 let playerX = {};
 let playerO = {};
